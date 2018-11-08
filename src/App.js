@@ -1,28 +1,56 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+
+//  React Components
+
+import AddCity from './components/AddCity/AddCity';
+
+
+// Actions
+
+import initLocation from './actions/initLocation';
+
+// Functions
+
+import getLocation from './getLocation';
+
+// Styles
+
 import './App.css';
 
+
+
 class App extends Component {
+  
+  componentDidMount() {
+    const props = this.props;
+    const initLocation = getLocation();
+    initLocation.then(res => {
+      props.addLocation(res);
+    });
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="weather">
+        <div className="container">
+          <AddCity />
+        </div>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  coordinates: state.rootReducer.data
+});
+
+const mapDispatchToProps = dispatch => {
+  
+  return {
+    addLocation: (data) => {
+      dispatch(initLocation(data))
+    }
+  }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps )(App);
