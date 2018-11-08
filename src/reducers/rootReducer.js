@@ -1,19 +1,23 @@
 
-import { INIT_LOCATION } from './../constants/actionTypes';
+import { GET_CURRENT_WEATHER, GET_WEATHER } from './../constants/actionTypes';
 
-const initialState = {};
-    
-
+const initialState = {
+    cities: []
+};
 
 export default (state = initialState, action) => {
-
-    if (action.type === INIT_LOCATION) {
+    
+    if ( action.type === GET_CURRENT_WEATHER ) {
         return {
             ...state,
-            location: {
-                latitude: action.data.coords.latitude,
-                longitude: action.data.coords.latitude,
-            }
+            currentWeather: action.data
+        }
+    }
+
+    if ( action.type === GET_WEATHER ) {
+        return {
+            ...state,
+            getCities: state.cities.push(action.data)
         }
     }
 

@@ -1,6 +1,8 @@
-export const INIT_LOCATION = 'INIT_LOCATION';
-
+export const GET_CURRENT_WEATHER = 'GET_CURRENT_WEATHER';
+export const GET_WEATHER = 'GET_WEATHER';
+;
 
 export default {
-    INIT_LOCATION
+    GET_CURRENT_WEATHER,
+    GET_WEATHER
 }

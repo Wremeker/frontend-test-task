@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 //  React Components
 
+import ShowWeather from './components/ShowWeather/ShowWeather';
 import AddCity from './components/AddCity/AddCity';
-
+import ShowWeatherCity from './components/ShowWeatherCity/ShowWeatherCity';
 
 // Actions
 
-import initLocation from './actions/initLocation';
+import getCurrentWeather from './actions/getCurrentWeather';
 
 // Functions
 
@@ -18,15 +20,27 @@ import getLocation from './getLocation';
 
 import './App.css';
 
-
+const getWeather = (lat, lon ) => {
+  let result = new Promise((resolve, reject) => {
+    axios.get(`http://api.apixu.com/v1/current.json?key=ca628a294c8a4fc6920162818180811&q=${lat},${lon}`)
+    .then(res => {
+      resolve(res.data)
+    }).catch(e => {
+      reject(e)
+    });
+  })
+  return result;
+}
 
 class App extends Component {
-  
   componentDidMount() {
-    const props = this.props;
-    const initLocation = getLocation();
-    initLocation.then(res => {
-      props.addLocation(res);
+    getLocation().then(res => {
+      const lat = res.coords.latitude;
+      const long = res.coords.longitude;
+      const result = getWeather(lat,long);
+      result.then(res => {
+        this.props.getWeather(res);
+      })
     });
   }
   render() {
@@ -34,23 +48,21 @@ class App extends Component {
       <div className="weather">
         <div className="container">
           <AddCity />
+          <ShowWeatherCity />
+          <ShowWeather />
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  coordinates: state.rootReducer.data
-});
-
+const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => {
-  
   return {
-    addLocation: (data) => {
-      dispatch(initLocation(data))
+    getWeather: (data) => {
+      dispatch(getCurrentWeather(data))
     }
   }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps )(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);
