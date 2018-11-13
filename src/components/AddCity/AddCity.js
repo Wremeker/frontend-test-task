@@ -8,10 +8,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import styles from "./TextFieldStyles";
 
-// Styles
-
-import "./AddCity.css";
-
 // Actions
 
 import getOutherWeather from './../../actions/getOutherWeather';
@@ -20,7 +16,7 @@ class AddCity extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        addSity: ''
+        setSity: ''
       }
   }
   handleChange(e) {
@@ -28,14 +24,28 @@ class AddCity extends Component {
     let inputValue = e.target.value;
     if (inputValue.search(rusRegExp) !== -1) {
       e.target.value = inputValue.replace(rusRegExp, "");
-    } 
-    this.setState({
-      addSity: e.target.value
-    })
+    } else {
+      this.setState({
+        setSity: e.target.value,
+      })
+    }
   }
+  handeKeyPress(e) {
+    if (e.key === 'Enter') {
+      if (this.state.setSity.trim()) {
+        this.props.addWeather({
+          city: this.state.setSity,
+          timestamp: Date.now().toString()
+        })
+      }
+    }
+  } 
   handleClick(e) {
-    if (this.state.addSity.trim()) {
-      this.props.addWeather(this.state.addSity)
+    if (this.state.setSity.trim()) {
+      this.props.addWeather({
+        city: this.state.setSity,
+        timestamp: Date.now().toString()
+      })
     }
   }
   render() {
@@ -51,6 +61,7 @@ class AddCity extends Component {
           autoFocus={true}
           className={classes.textField}
           onChange={this.handleChange.bind(this)}
+          onKeyPress={this.handeKeyPress.bind(this)}
           InputProps={{
             classes: {
               root: classes.input,
@@ -75,7 +86,7 @@ class AddCity extends Component {
         >
           Check the weather
         </Button>
-      <h1>Weather now</h1>
+        <h1>Weather now</h1>
       </div>
     );
   }

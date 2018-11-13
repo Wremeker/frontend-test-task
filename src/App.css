@@ -1,10 +1,25 @@
+
+@keyframes opacity {
+    0% {
+        opacity: .0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .weather {
-    max-width: 960px;
+    width: 960px;
     margin: 100px auto;
     box-shadow: -1px 0px 43px -16px rgba(0,0,0,0.75);
     padding: 30px 50px;
     background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
 } 
+
+
+.weather__show {
+    animation: opacity 0.3s ease;
+}
 
 h1 {
     color: #fff;
@@ -42,12 +57,10 @@ h3 {
     width: 20%;
 }
 
-.weather__current-show {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
 
 .weather__show {
     margin: 20px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }

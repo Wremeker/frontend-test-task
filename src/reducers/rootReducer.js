@@ -1,8 +1,9 @@
 
-import { GET_CURRENT_WEATHER, GET_WEATHER } from './../constants/actionTypes';
+import { GET_CURRENT_WEATHER, GET_WEATHER, NOT_ACCESS, DELETE_WEATHER } from './../constants/actionTypes';
 
 const initialState = {
-    cities: []
+    cities: [],
+    timestamps: []
 };
 
 export default (state = initialState, action) => {
@@ -13,11 +14,22 @@ export default (state = initialState, action) => {
             currentWeather: action.data
         }
     }
-
+    if (action.type === NOT_ACCESS) {
+        return {
+            ...state, 
+            error: action.error
+        }
+    }
+    if (action.type === DELETE_WEATHER) {
+        return {
+            ...state,
+            timestamps: state.timestamps.concat(action.data)
+        }
+    }
     if ( action.type === GET_WEATHER ) {
         return {
             ...state,
-            getCities: state.cities.push(action.data)
+            cities: state.cities.concat(action.data),
         }
     }
 

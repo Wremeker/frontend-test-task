@@ -1,13 +1,26 @@
+
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+// Material UI
+
+import Button from "@material-ui/core/Button";
+
+// Actions
+
+import deleteCity from './../../actions/deleteCity';
+
+
+
 class ShowWeather extends Component {
+  handleClick() {
+    this.props.deleteCity(this.props.timestamp);
+  }
   render() {
-    if (this.props.weather) {
-      const { name, country, region } = this.props.weather.location;
-      const { temp_c, temp_f, } = this.props.weather.current;
+      const { name, country, region } = this.props;
+      const { temp_c, temp_f, isLocation } = this.props;
       return (
-        <div className="weather__current-show">
+        <div className="weather__show">
           <div className="col">
             <h3>Location</h3>
             <div className="row">
@@ -32,20 +45,33 @@ class ShowWeather extends Component {
               <span className="temp__info">{temp_f}</span>
             </div>
           </div>
+          {
+            isLocation ? (
+            <div className="col">
+              <div className="row">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleClick.bind(this)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>    
+            ) : ''
+          }
         </div>
       );
-    }
-    return "";
   }
 }
 
-const mapStateToProps = state => ({
-  weather: state.rootReducer.currentWeather
-});
+const mapStateToProps = state => ({});
 
-const mapDispatchToProps = dispatch => {
-  return {};
-};
+const mapDispatchToProps = dispatch => ({
+  deleteCity: (data) => {
+    dispatch(deleteCity(data))
+  }
+});
 
 export default connect(
   mapStateToProps,
