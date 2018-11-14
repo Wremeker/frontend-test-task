@@ -2,8 +2,11 @@
 
 
 ![](https://github.com/Wremeker/frontend-test-task/blob/master/image.png)
-* [Демо](https://wremeker.github.io/weather-app/)
-Приложение умеет:
+
+
+[Демо](https://wremeker.github.io/weather-app/)
+
+
 
 * Добавлять города (латиница)
 * Удалять города
