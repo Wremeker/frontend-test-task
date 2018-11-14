@@ -23,6 +23,9 @@
 * [Redux-persist [5.10.9]](https://github.com/rt2zz/redux-persist)
 * [Redux-thunk [5.10.9]](https://github.com/reduxjs/redux-thunk)
 * [Axios [0.18.0]](https://github.com/axios/axios)
+* [Material-ui [3.4.0]](https://github.com/mui-org/material-ui)
+
+
 
 ### Дополнительно
 
